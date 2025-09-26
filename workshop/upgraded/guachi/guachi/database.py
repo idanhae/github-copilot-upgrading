@@ -31,9 +31,6 @@ class dbdict(dict):
 
 
     def __setitem__(self, key, item):
-        # dict 타입은 sqlite에 저장 불가, 명확한 예외 발생
-        if isinstance(item, dict):
-            raise sqlite3.InterfaceError("Cannot store dict type in sqlite column.")
         try:
             if self.con.execute(self.select_key, (key,)).fetchone():
                 self.con.execute(self.update_value, (item,key))
